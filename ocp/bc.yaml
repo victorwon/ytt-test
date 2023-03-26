@@ -1,0 +1,22 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: nginx-build
+  labels:
+    app: test-ytt
+spec:
+  source:
+    git:
+      uri: https://github.com/victorwon/ytt-test
+      ref: main
+    contextDir: /
+  strategy:
+    type: Docker
+    dockerStrategy:
+      dockerfilePath: Dockerfile
+      buildArgs:
+        BASE_IMAGE: nginx:latest
+  output:
+    to:
+      kind: ImageStreamTag
+      name: test-ytt:latest
